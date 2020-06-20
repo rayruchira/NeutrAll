@@ -1,0 +1,175 @@
+
+.rectangle
+{
+ position: fixed;
+ width:100%;
+ height: 113px;
+left: 0px;
+top: 0px;
+
+background: #FAFAFF;
+}
+.Home
+{
+ position: fixed;
+width: 122px;
+height: 36px;
+left: 1000px;
+top: 47px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 33px;
+
+color: #8988BD;
+}
+.Login
+{
+ position: fixed;
+height: 36px;
+left: 1200px;
+right: 22px;
+top:47px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 33px;
+
+color: #8988BD;
+}
+.Register
+{
+ position: fixed;
+width: 300px;
+height: 36px;
+left: 1400px;
+top: 47px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 33px;
+
+color: #8988BD;
+
+}
+.UNBIASED
+{
+ position: fixed;
+width: 376px;
+height: 52px;
+left: 50px;
+top: 47px;
+
+font-family: 'Archivo';
+font-style: normal;
+font-weight: 600;
+font-size: 40px;
+line-height: 44px;
+
+color: #8988BD;
+}
+.image
+{
+ position: absolute;
+width: 792px;
+height: 668px;
+left: 205px;
+top: 249px;
+
+background-image: url(uploads/Humaaans\ 3\ Characters.svg);
+mix-blend-mode: multiply;
+}
+.rectangle1
+{
+ position: absolute;
+width: 489px;
+height: 661px;
+left: 1200px;
+top: 236px;
+
+background: #E5E5E5;
+border: 1px solid #E5E5E5;
+box-sizing: border-box;
+border-radius: 30px;
+}
+.rectangle2
+{
+ position: absolute;
+width: 489px;
+height: 661px;
+left: 1175px;
+top: 254px;
+
+background: #FFFFFF;
+border: 1px solid #3B3A4D;
+box-sizing: border-box;
+border-radius: 30px;
+}
+.hello
+{
+ position: absolute;
+width: 312px;
+height: 62px;
+left: 1220px;
+top: 387px;
+
+font-family: Archivo;
+font-style: normal;
+font-weight: 600;
+font-size: 72px;
+line-height: 78px;
+
+color: #7473A7;
+}
+.quote
+{
+ position: absolute;
+width: 422px;
+height: 156px;
+left: 1220px;
+top: 489px;
+
+font-family: Archivo;
+font-style: normal;
+font-weight: normal;
+font-size: 48px;
+line-height: 52px;
+letter-spacing: 0.04em;
+
+color: #3B3A4D;
+}
+.autho
+{
+ position: absolute;
+width: 209px;
+height: 80px;
+left: 1384px;
+top: 796px;
+}
+.back
+{
+ position: fixed;
+width: 100%;
+height: 100%;
+left: 0px;
+top: 113px;
+
+background:url(uploads/x879fd564c676dc508c71fb798d6ef876\ 1.svg)
+}
+.frame
+{
+ position: fixed;
+width: 639px;
+height: 862px;
+left: 608px;
+top: 120px;
+overflow-y: scroll;
+}
+.frame::-webkit-scrollbar
+{display:none}

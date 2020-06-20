@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html class="h-100">
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta charset="UTF-8" />
+    <title>NeutrAll</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/css/auth0-theme.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <!--
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
+        integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
+        integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
+    -->
+</head>
+<style>
+.bg-dark {
+    background-color: rgb(50, 46, 59) !important;
+    padding: 10px;
+    color: rgb(255, 255, 255);
+}
+.route-link{
+    font-weight: bold;
+    
+}
+
+</style>
+
+<body style="background: rgb(239, 238, 255)" class="h-100">
+    <div id="app" class="h-100 d-flex flex-column">
+        <div class="nav-container">
+            <nav  class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div style="padding: 0%; margin: 0px 40px;"class="container">
+                    <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                font-style: normal;
+                                font-weight: 600;
+                                font-size: 30px;
+                                line-height: 44px;
+                                color: #ffffff" class="navbar-brand" href="/">
+                        <img src="images/log1.png" alt="" width="60" height="70">
+                        NeutrAll
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div style="position:relative; right:-5%;"class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            
+                        </ul>
+                                                                <!-- /Fullsize dropdown -->
+
+                            
+                            <ul class="navbar-nav d-none d-md-block">
+                                <!-- Login button: show if NOT authenticated -->
+                                <li class="nav-item auth-invisible">
+                                    <button id="qsLoginBtn" onclick="login()" class="btn btn-light btn-margin auth-invisible hidden">
+                                        <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                font-style: normal;" href="/register" class="dropdown-item dropdown-profile route-link">
+                                            Log in
+                                    </button>
+                                </li>
+                                <!-- / Login button -->
+                        
+                                <!-- Fullsize dropdown: show if authenticated -->
+                                <li class="nav-item dropdown auth-visible hidden">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropDown" data-toggle="dropdown">
+                                        <!-- Profile image should be set to the profile picture from the id token -->
+                                        <img alt="Profile picture" class="nav-user-profile profile-image rounded-circle" width="50" />
+                                    </a>
+                                    <div style="background-color: rgb(205, 190, 224);"class="dropdown-menu dropdown-menu-right">
+                                        <!-- Show the user's full name from the id token here -->
+                                        <div class="dropdown-header nav-user-name user-name"></div>
+                                        <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                font-style: normal;" href="/profile" class="dropdown-item dropdown-profile route-link">
+                                            <i class="fas fa-user mr-3"></i> Profile
+                                        </a>
+                                        <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                font-style: normal;" href="#" class="dropdown-item" id="qsLogoutBtn" onclick="logout()">
+                                            <i class="fas fa-power-off mr-3"></i> Log out
+                                        </a>
+                                    </div>
+                                </li>
+                                <!-- /Fullsize dropdown -->
+                            </ul>
+
+                        <!-- Responsive login button: show if NOT authenticated -->
+                        <ul class="navbar-nav d-md-none auth-invisible">
+                            <button class="btn btn-primary btn-block auth-invisible hidden" id="qsLoginBtn"
+                                onclick="login()">
+                                Log in
+                            </button>
+                        </ul>
+                        <!-- /Responsive login button -->
+
+                        <!-- Responsive profile dropdown: show if authenticated -->
+                        <ul class="navbar-nav d-md-none auth-visible hidden justify-content-between"
+                            style="min-height: 125px">
+                            <li class="nav-item">
+                                <span class="user-info">
+                                    <!-- Profile image should be set to the profile picture from the id token -->
+                                    <img alt="Profile picture"
+                                        class="nav-user-profile d-inline-block profile-image rounded-circle mr-3"
+                                        width="50" />
+                                    <!-- Show the user's full name from the id token here -->
+                                    <h6 class="d-inline-block nav-user-name user-name"></h6>
+                                </span>
+                            </li>
+                            <li>
+                                <i class="fas fa-user mr-3"></i>
+                                <a href="/profile" class="route-link">Profile</a>
+                            </li>
+
+                            <li>
+                                <i class="fas fa-power-off mr-3"></i>
+                                <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div  id="main-content" class="container mt-5 flex-grow-1">
+            <div id="content-home" class="page">
+                
+                <div class="text-center hero">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            
+                            <img src="\images\undraw_work_chat_erdt.svg" class="img-fluid">
+                                
+                        </div>
+                        
+                        <div class="col-sm-5">
+                           <div> <div style="
+                                        width: 300px;
+                                        height: 400px;
+                                        
+                                        
+            
+                                        background:rgb(86, 79, 100);
+                                        border: 1px solid #E5E5E5;
+                                        box-sizing: border-box;
+                                        border-radius: 30px">
+                            </div>
+                            <div style="position: absolute;
+                                        width: 300px;
+                                        height: 400px;
+                                        left:30px;
+                                        top: 30px;
+                
+                                        background: #ffffff;
+                                        border: 3px solid rgb(95, 80, 124);
+                                        box-sizing: border-box;
+                                        border-radius: 30px">
+                            </div>
+                            <div style="position: absolute;
+                                            width: 312px;
+                                            height: 62px;
+                                            
+                                            top: 80px;
+                    
+                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                            font-style: normal;
+                                            font-weight: 600;
+                                            font-size: 72px;
+                                            line-height: 78px;
+                    
+                                            color: rgb(63, 63, 63)">Hello!</div>
+                            
+                            <div style=" position: absolute;
+                                            
+                                            height: 156px;
+                                            left: 60px;
+                                            top: 200px;
+
+                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                            font-style: normal;
+                                            font-weight: normal;
+                                            font-size: 40px;
+                                            line-height: 45px;
+                                            letter-spacing: 0.04em;
+
+                                            color: rgb(94, 89, 105);
+                                            ">Let's make<br>a safe space<br>for your<br>employees!
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                
+                </div>
+                <div class="next-steps">
+
+                    <div style="margin-top: 50px;" class="row">
+                        <div style=" text-align: center;
+                                font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 30px;
+                                line-height: 45px;
+                                letter-spacing: 0.04em;
+        
+                                color: rgb(94, 89, 105);
+                                "> Workplace diversity is important not only because it brings benefits in business spheres
+                            such as brand management ,
+                            customer engagement, and CSR, but also because it creates added value for the organization by attracting diverse
+                            innovation driving professionals.
+                        </div>
+                    </div>
+
+                    
+
+                    <h2 class="my-5 text-center" align="center">WHAT DO WE DO?</h2>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-4">
+                            <h6 class="mb-3">
+                                <a href="https://auth0.com/docs/connections">
+                                    <i class="fas fa-link"></i> Virtual HR
+                                </a>
+                            </h6>
+                            <p>
+                                NeutrAll helps to track inclusion at any given organization.
+                                Employees provided with a platform to express themselves and their
+                                concerns regarding how acknowledged they feel. We protect identities 
+                                so that employees feel safe. 
+
+                            </p>
+                        </div>
+
+                        <div class="col-md"></div>
+
+                        <div class="col-md-5 mb-4">
+                            <h6 class="mb-3">
+                                <a href="https://auth0.com/docs/multifactor-authentication">
+                                    <i class="fas fa-link"></i> Auth0
+                                    Authentication
+                                </a>
+                            </h6>
+                            <p>
+                                Rapidly integrating authorization for our web application 
+                                using Auth0 API, which provides an extra layer of security
+                                by enabling Multi-factor Authentication. Administrators
+                                can manage users, provisioning blocking and deleting users going 
+                                against company protocol.  
+                                
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-4">
+                            <h6 class="mb-3">
+                                <a href="https://auth0.com/docs/connections">
+                                    <i class="fas fa-link"></i> Personality Insight API
+                                </a>
+                            </h6>
+                            <p>
+                                Analysisng social media presence (such as, Instagram)
+                                to evaluate  inclusiveness and preferences of the organisation
+                                by integrating Personality Insight API by IBM.
+                                
+                            </p>
+                        </div>
+                    
+                        <div class="col-md"></div>
+                    
+                        <div class="col-md-5 mb-4">
+                            <h6 class="mb-3">
+                                <a href="https://auth0.com/docs/multifactor-authentication">
+                                    <i class="fas fa-link"></i> Interactive Charts
+                                </a>
+                            </h6>
+                            <p>
+                                We provide interactive charts using google sheets API 
+                                to show real-time changes according to company employees
+                                list. Statistics according to user identities are shown and
+                                a free platform is provided for easy change or preference and perspectives.
+                                
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <style>
+            .frame{
+                    position: fixed;
+                    width: 639px;
+                    height: 862px;
+                    left: 400px;
+                    top: 120px;
+                    overflow-y: scroll;
+                    color: blueviolet;
+                    }
+            </style>
+        
+            <div class="page" id="content-profile">
+                        <section id="user">
+                            
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                        font-style: normal;
+                                                                                                                        font-weight: 600;
+                                                                                                                        " id=btnu2f
+                                        class="btn btn-outline-dark">GO TO
+                                        FEEDBACK</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" id="textInput" value="">
+                                    <button
+                                        style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                                                        font-style: normal;
+                                                                                                                                                        font-weight: 600;
+                                                                                                                                                        "
+                                        id=btnu2cc class="btn btn-outline-dark">COMPANY CHARTS</button>
+                                        
+                                </div>
+                                
+                            </div>
+                            <div styel="text-align: center;"class="container">
+                            
+                                    <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                font-style: normal;
+                                                font-weight: 600;
+                                                font-size: 40px;
+                                                line-height: 52px;
+                                                color: rgb(43, 31, 49);"class="first-class" align="center" >WELCOME,BOSS!
+                                
+                                    </h1>
+                                
+                                <div class="row ">
+                                    <div style="                         
+                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                            font-style: normal;
+                                            
+                                            font-size: 20px;
+                                            
+                                            text-align: justify;
+                                            
+                                            color: rgb(81, 68, 102);">Here’s what we are going to do: We have collected
+                                        information from your employees
+                                        and we will walk you
+                                        through the
+                                        diversity inside your office!
+                                    </div>
+                                </div>
+                                <div style="margin-top:20px;" class="row">
+                                    <div style="padding: 0px 0px 0px 0px;" class="col-sm-6">
+                                        <div style="
+                                                                        
+                                                                        height: 69px;
+                                                                        
+                                                                        font-style: normal;
+                                                                        font-weight: 600;
+                                                                        font-size: 36px;
+                                                                        line-height: 39px;
+                                                                        
+                                                                        color: #3B3A4D;
+                                                                        background: rgba(137, 136, 189, 0.23);
+                                                                        border-radius: 40px">
+                                        </div>
+                                        <div> </div>
+                                        <div style="position: absolute;
+                                                                        
+                                                                        height: 48px;
+                                                                        left: 20px;
+                                                                        top: 15px;
+                                                                        font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                        font-style: normal;
+                                                                        font-weight: 600;
+                                                                        font-size: 20px;
+                                                                        line-height: 39px;
+                                                                                
+                                                                                color: #3B3A4D;">1.GENDER DISTRIBUTION</div>
+                                        <div style="padding: 20px 0px 0px 0px;"><img class="img-fluid"
+                                                src="/images/CIS-MALE_ A person who was born a male. CIS-FEMALE_ A person who was born a female. NON-BINARY_ A person who isn’t exclusively male or female. TRANS-FEMALE_A person who identfies as female (born.png">
+                                        </div>
+                                
+                                    </div>
+                                    <div style="padding: 0px 0px 0px 20px;" class="col-sm-6">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tBXAYOm26T6efyVpBqWzgkUSlV6lcUZe96qKagapuqSVBMcpaAjDQk0C0nVQozisXMMR2YgHUcvy/pubchart?oid=1464969254&amp;format=interactive"></iframe>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top:50px;" class="row">
+                                    <div style="padding: 0px 0px 0px 0px;" class="col-sm-6">
+                                        <div style="
+                                                                    
+                                                                    height: 69px;
+                                                                    
+                                                                    font-style: normal;
+                                                                    font-weight: 600;
+                                                                    font-size: 36px;
+                                                                    line-height: 39px;
+                                                                    
+                                                                    color: #3B3A4D;
+                                                                    background: rgba(137, 136, 189, 0.23);
+                                                                    border-radius: 40px">
+                                        </div>
+                                        <div> </div>
+                                        <div style="position: absolute;
+                                                                                            
+                                                                        height: 48px;
+                                                                        left: 20px;
+                                                                        top: 15px;
+                                                                        font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                        font-style: normal;
+                                                                        font-weight: 600;
+                                                                        font-size: 20px;
+                                                                        line-height: 39px;
+                                                                                
+                                                                                color: #3B3A4D;">2.ETHNICITY DISTRIBUTION
+                                        </div>
+                                        <div style="padding: 20px 0px 0px 0px;"><img class="img-fluid"
+                                                src="/images/LATINO_ eg. Spanish, Latin American,etc NATIVE AMERI.png">
+                                        </div>
+                                
+                                    </div>
+                                    <div style="padding: 0px 0px 0px 20px;" class="col-sm-6">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tBXAYOm26T6efyVpBqWzgkUSlV6lcUZe96qKagapuqSVBMcpaAjDQk0C0nVQozisXMMR2YgHUcvy/pubchart?oid=270751501&amp;format=interactive"></iframe>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top:50px;" class="row">
+                                    <div style="padding: 0px 0px 0px 0px;" class="col-sm-6">
+                                        <div style="
+                                                                                            
+                                                                                            height: 69px;
+                                                                                            
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 36px;
+                                                                                            line-height: 39px;
+                                                                                            
+                                                                                            color: #3B3A4D;
+                                                                                            background: rgba(137, 136, 189, 0.23);
+                                                                                            border-radius: 40px">
+                                        </div>
+                                        <div> </div>
+                                        <div style="position: absolute;
+                                                                                            
+                                                                                            height: 48px;
+                                                                                            left: 20px;
+                                                                                            top: 15px;
+                                                                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 20px;
+                                                                                            line-height: 39px;
+                                                                                                    
+                                                                                                    color: #3B3A4D;">3.RELIGIOUS DISTRIBUTION</div>
+                                        <div style="padding: 20px 0px 0px 0px;"><img class="img-fluid"
+                                                src="/images/HINDU_ A person who follows Hinduism. BUDDHIST_ A person who follows Buddhism. MUSLIM_ A person who follows Islam. CHRISTIAN_ A person who follows Christianity. JAIN_ A person who follows Jainism..png">
+                                        </div>
+                                
+                                    </div>
+                                    <div style="padding: 0px 0px 0px 20px;" class="col-sm-6">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tBXAYOm26T6efyVpBqWzgkUSlV6lcUZe96qKagapuqSVBMcpaAjDQk0C0nVQozisXMMR2YgHUcvy/pubchart?oid=1350621694&amp;format=interactive"></iframe>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top:50px;" class="row">
+                                    <div style="padding: 0px 0px 0px 0px;" class="col-sm-6">
+                                        <div style="
+                                                                                            
+                                                                                            height: 69px;
+                                                                                            
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 36px;
+                                                                                            line-height: 39px;
+                                                                                            
+                                                                                            color: #3B3A4D;
+                                                                                            background: rgba(137, 136, 189, 0.23);
+                                                                                            border-radius: 40px">
+                                        </div>
+                                        <div> </div>
+                                        <div style="position: absolute;
+                                                                                            
+                                                                                            height: 48px;
+                                                                                            left: 20px;
+                                                                                            top: 15px;
+                                                                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 20px;
+                                                                                            line-height: 39px;
+                                                                                                    
+                                                                                                    color: #3B3A4D;">4.SEXUALITY DISTRIBUTION</div>
+                                        <div style="padding: 20px 0px 0px 0px;"><img class="img-fluid"
+                                                src="/images/STRAIGHT_ A person who’s interested in opposite sex. HOMOSEXUAL_ A person who’s interested in same sex. ASEXUAL_ A person who isn’t interested in any sex. BISEXUAL_ A person who’s interest.png">
+                                        </div>
+                                
+                                    </div>
+                                    <div style="padding: 0px 0px 0px 20px;" class="col-sm-6">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tBXAYOm26T6efyVpBqWzgkUSlV6lcUZe96qKagapuqSVBMcpaAjDQk0C0nVQozisXMMR2YgHUcvy/pubchart?oid=1520011963&amp;format=interactive"></iframe>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top:50px;" class="row">
+                                    <div style="padding: 0px 0px 0px 0px;" class="col-sm-6">
+                                        <div style="
+                                                                                            
+                                                                                            height: 69px;
+                                                                                            
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 36px;
+                                                                                            line-height: 39px;
+                                                                                            
+                                                                                            color: #3B3A4D;
+                                                                                            background: rgba(137, 136, 189, 0.23);
+                                                                                            border-radius: 40px">
+                                        </div>
+                                        <div> </div>
+                                        <div style="position: absolute;
+                                                                                            
+                                                                                            height: 48px;
+                                                                                            left: 20px;
+                                                                                            top: 15px;
+                                                                                            font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 20px;
+                                                                                            line-height: 39px;
+                                                                                                    
+                                                                                                    color: #3B3A4D;">5.SPECIAL CONDITIONS</div>
+                                        <div style="padding: 20px 0px 0px 0px;"><img class="img-fluid"
+                                                src="/images/PHYSICAL IMPAIRMENT_ eg. broken hand, leg damage, etc. SENSORY IMPAIRMENT_ eg. Eyesight problem, hearing, etc. MENTAL HEALTH_ eg. Depression, Anxiety, etc. LEARNING DIFFICULTY_ eg.dyslexia, autism.png">
+                                        </div>
+                                
+                                    </div>
+                                    <div style="padding: 0px 0px 0px 20px;" class="col-sm-6">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tBXAYOm26T6efyVpBqWzgkUSlV6lcUZe96qKagapuqSVBMcpaAjDQk0C0nVQozisXMMR2YgHUcvy/pubchart?oid=720955737&amp;format=interactive"></iframe>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                        </section>
+                            
+                            <section id="mistress-only">
+                                <div class="row">
+                                    
+                                    <div class="col-sm-6">
+                                        <button
+                                            style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                                                                    font-style: normal;
+                                                                                                                                                                    font-weight: 600;
+                                                                                                                                                                    "
+                                            id=btncc2u class="btn btn-outline-dark">GO TO
+                                            BACK TO PROFILE</button>
+                                    </div>
+                                </div>
+                                <div style="margin-top:50px; text-align: center;" class="container">
+                                    <h2 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                            font-style: normal;
+                                                                            font-weight: 600;
+                                                                            font-size: 40px;
+                                                                            line-height: 52px;
+                                                                            color: rgb(43, 31, 49);" class="first-class" align="center">
+                                        TEAM WISE DISTRIBUTION
+                                    </h2>
+                                </div>
+                                <div style="margin-top:20px;" class="row">
+                                    <div style="padding-left: 0px;" class="col-sm-3">
+                                        <h2 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                            font-style: normal;
+                                                                            font-weight: 600;
+                                                                            font-size: 25px;
+                                                                            line-height: 52px;
+                                                                            color: rgb(110, 98, 116);"> TEAM 1</h2>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRqtX3pQzPBrn11IhHBxlZfZ9Bju9M2Ju9vaaOrbCld-fHuNSHdLP9oBKefFIVOxZ1W8YVcnQMxSm_v/pubchart?oid=69359880&amp;format=interactive"></iframe>
+                            
+                                        </div>
+                            
+                                    </div>
+                            
+                                </div>
+                                <div style="margin-top:20px;" class="row">
+                                    <div style="padding-left: 0px;" class="col-sm-3">
+                                        <h2 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                font-style: normal;
+                                                                                                font-weight: 600;
+                                                                                                font-size: 25px;
+                                                                                                line-height: 52px;
+                                                                                                color: rgb(110, 98, 116);"> TEAM 2</h2>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQv8AdlfP5m2sGTdH1TfWMWHkZeA9ndrrFh01wHvItiOrXURdwD0ffctoy0E_7M2ajZyT4VTHzhJ9Cr/pubchart?oid=1351704310&amp;format=interactive"></iframe>
+                            
+                                        </div>
+                            
+                                    </div>
+                            
+                                </div>
+                                <div style="margin-top:20px; margin-bottom: 20px;" class="row">
+                                    <div style="padding-left: 0px;" class="col-sm-3">
+                                        <h2 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                font-style: normal;
+                                                                                                font-weight: 600;
+                                                                                                font-size: 25px;
+                                                                                                line-height: 52px;
+                                                                                                color: rgb(110, 98, 116);"> TEAM 3</h2>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <iframe width="600px" height="371px" seamless frameborder="0" scrolling="no"
+                                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpULoNz2zM-rV3IAxPr3WCFEKXSeGo12IRS_R8WmFbMG8jkdK8uI2OQGYRITo5TYM-AY2NFVGFp_4S/pubchart?oid=814840854&amp;format=interactive"></iframe>
+                            
+                                        </div>
+                            
+                                    </div>
+                            
+                                </div>
+                                
+                                <div styel="text-align: center;  margin-top: 50px;" class="container">
+                                    <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                    font-style: normal;
+                                                                                    font-weight: 600;
+                                                                                    font-size: 30px;
+                                                                                    line-height: 52px;
+                                                                                    color: rgb(43, 31, 49);" class="first-class" align="center">
+                                        FEEDBACK FROM EMPLOYEES
+                                    
+                                    </h1>
+                                </div>
+                                <div style=" margin: 50px;" class="row">
+                                    <iframe width="1200px" height="500px" scrolling="yes"
+                                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRGpKxOY-IDWftc__j43DiazT6tVb0z5-sMzopKI-XYL8_UrMEjhwBjC7UmfQRfetEPLGYoH9YAa1VJ/pubhtml?gid=1324197146&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                                </div>
+
+                                <div styel="text-align: center; margin-top: 50px;" class="container">
+                                    <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                font-style: normal;
+                                                font-weight: 600;
+                                                font-size: 30px;
+                                                line-height: 52px;
+                                                color: rgb(43, 31, 49);"
+                                        class="first-class" align="center">
+                                        PERSONALITY INSIGHT
+                                
+                                    </h1>
+                                    <h3 align="justify">An Organisation with strong values of Diversity and Inclusion also implicitly paints its image to the world through
+                                    their social endeavours representing people of all races, castes and genders equally.
+                                    
+                                    After thorough analysis of ‘GOOGLE’ in all their company’s social platforms through Deep Learning , here are our
+                                    results.
+                                    
+                                    92% more likely to portray Diversity in its People
+                                    
+                                    95% socio-positive thinking is portrayed.</h3>
+                                </div>
+                                <div style="margin: 50px;" class="row">
+                                    <iframe width="927" height="484" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ91T9ZRomjnFWz2TzEp1osu7E-SAhdtsohuXBB29Lw3UAccSUFd947Lv9knrZOhlFJg8JDyVKPXBB3/pubchart?oid=1694828322&amp;format=interactive"></iframe>
+                                </div>
+                            </section>
+
+                            <section id="userr">
+                                <div class="container">
+                            
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            " id=btnr2f class="btn btn-outline-dark">GO TO
+                                                FEEDBACK</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                                    font-style: normal;
+                                                                                                                                    font-weight: 600;
+                                                                                                                                    " id=btnr2u
+                                                class="btn btn-outline-dark">GO TO
+                                                    BACK TO PROFILE</button>
+                                        </div>
+                                    </div>
+                            
+                            
+                                    <div style="background-color: rgba(50, 46, 59, 0.753) !important; margin: 10px;" class="row">
+                                        <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            font-size: 40px;
+                                                                                            line-height: 52px;
+                                                                                            left: 20px;
+                                                                                            color: rgb(255, 255, 255);" class="first-class"
+                                            align="center">
+                                            FILL FORM FOR REGISTRATION, OR TO UPDATE USER INFO.
+                                        </h1>
+                                    </div>
+                                    <div style="left: 50px" class="row col-sm-12">
+                                        <iframe
+                                            src="https://docs.google.com/forms/d/e/1FAIpQLSe5O_zrfBUNeIV-6-i6ic9UP70lfTlebyILJQFyMDqYAiAc1w/viewform?embedded=true"
+                                            width="640" height="4600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            
+                            
+                            
+                                    </div>
+                            </section>
+
+                            <section id="userf">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;
+                                                                                            font-weight: 600;
+                                                                                            " id=btnf2r class="btn btn-outline-dark">GO TO
+                                                REGISTRATION</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                                        font-style: normal;
+                                                                                                                                        font-weight: 600;
+                                                                                                                                        " id=btnf2u
+                                                class="btn btn-outline-dark">GO TO
+                                                BACK TO PROFILE</button>
+                                        </div>
+                                    </div>
+                            
+                            
+                                    <div style="background-color: rgba(50, 46, 59, 0.753) !important; margin: 10px;" class="row">
+                            
+                                        <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                                                font-style: normal;
+                                                                                                                font-weight: 600;
+                                                                                                                font-size: 40px;
+                                                                                                                line-height: 52px;
+                                                                                                                left: 20px;
+                                                                                                                color: rgb(255, 255, 255);"
+                                            class="first-class" align="center">
+                                            FILL FORM FOR FEEDBACK FOR COMPANY IMPROVEMNT.
+                                        </h1>
+                                    </div>
+                                    <div style="left: 50px" class="row col-sm-12">
+                                        <iframe
+                                            src="https://docs.google.com/forms/d/e/1FAIpQLSeggMltTdAPDnC1zOw_W_oVizusCPi3jMT4IujJHI00Dy_aSw/viewform?embedded=true"
+                                            width="640" height="4600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            
+                            
+                                    </div>
+                                </div>
+                            </section>
+                                <!--<div class="frame">
+                                    <iframe
+                                        src="https://docs.google.com/forms/d/e/1FAIpQLSe5O_zrfBUNeIV-6-i6ic9UP70lfTlebyILJQFyMDqYAiAc1w/viewform?embedded=true"
+                                        width="640" height="4600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe></div>
+                                -->
+                                <!--<div class="row">
+                                    <div style="background:rgba(220, 248, 255, 0.596);"class="col-sm-12">
+                                        <pre class="rounded">
+                                            <code id="profile-data" class="json"></code></pre>
+                                    </div>
+                                </div>
+                            -->
+                            
+            </div>
+            <style>
+            
+            </style>
+            <div class="page" id="content-register">
+                
+                
+                <section id="one">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                font-style: normal;
+                                                                font-weight: 600;
+                                                                " id=btn class="btn btn-outline-dark">GO TO FEEDBACK</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button id=btn3 class="btn btn-outline-dark">
+                                    <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                            font-style: normal;" href="/profile"
+                                        class="dropdown-item dropdown-profile route-link">
+                                        PROFILE
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                       
+                        
+                            <div style="background-color: rgba(50, 46, 59, 0.753) !important; margin: 10px;"class="row">
+                            <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                font-style: normal;
+                                                                font-weight: 600;
+                                                                font-size: 40px;
+                                                                line-height: 52px;
+                                                                left: 20px;
+                                                                color: rgb(255, 255, 255);" class="first-class" align="center">
+                                FILL FORM FOR REGISTRATION, OR TO UPDATE USER INFO.
+                            </h1>
+                            </div>
+                            <div style="left: 50px" class="row col-sm-12">
+                            <iframe 
+                                src="https://docs.google.com/forms/d/e/1FAIpQLSe5O_zrfBUNeIV-6-i6ic9UP70lfTlebyILJQFyMDqYAiAc1w/viewform?embedded=true"
+                                width="640" height="4600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            
+                
+                        
+                    </div>
+                </section>
+                <section id="two">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                font-style: normal;
+                                                                font-weight: 600;
+                                                                "id=btn1 class="btn btn-outline-dark">GO TO REGISTRATION</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button id=btn2 class="btn btn-outline-dark">
+                                    <a style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                    font-style: normal;" href="/profile"
+                                        class="dropdown-item dropdown-profile route-link">
+                                            PROFILE
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                       
+                    
+                        <div style="background-color: rgba(50, 46, 59, 0.753) !important; margin: 10px;" class="row">
+                    
+                            <h1 style="font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+                                                                                    font-style: normal;
+                                                                                    font-weight: 600;
+                                                                                    font-size: 40px;
+                                                                                    line-height: 52px;
+                                                                                    left: 20px;
+                                                                                    color: rgb(255, 255, 255);" class="first-class"
+                                align="center">
+                                FILL FORM FOR FEEDBACK FOR COMPANY IMPROVEMNT.
+                            </h1>
+                        </div>
+                        <div style="left: 50px" class="row col-sm-12">
+                            <iframe
+                                src="https://docs.google.com/forms/d/e/1FAIpQLSeggMltTdAPDnC1zOw_W_oVizusCPi3jMT4IujJHI00Dy_aSw/viewform?embedded=true"
+                                width="640" height="4600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    
+                        
+                        </div>
+                        </div>
+                </section>
+                
+            </div>
+            <div class="page" id="content-idk">
+                <style>
+                    
+                </style>
+                <div class="container">
+            
+                    <div class="row">
+                        <div style="background:rgba(220, 248, 255, 0.596);" class="col-sm-12">
+                            <pre class="rounded">
+                                                    <code id="profile-data" class="json"></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                <script>
+                    $('#two').hide('slow')
+                    $('#mistress-only').hide()
+                    $('#userr').hide()
+                    $('#userf').hide()
+                    $('#btn').on('click', function () {
+                        if ($)
+                            $('#one').hide('slow')
+                        $('#two').show('slow');
+                    });
+                    $('#btn1').on('click', function () {
+                        if ($)
+                            $('#two').hide('slow')
+                        $('#one').show('slow');
+                    });
+                    $('#btnu2f').on('click', function () {
+                            if ($)
+                                $('#user').hide('slow')
+                            $('#userf').show('slow');
+                        });
+                    $('#btnf2r').on('click', function () {
+                            if ($)
+                                $('#userf').hide('slow')
+                            $('#userr').show('slow');
+                        });
+                    $('#btnr2f').on('click', function () {
+                            if ($)
+                                $('#userr').hide('slow')
+                            $('#userf').show('slow');
+                        });
+                    $('#btnf2u').on('click', function () {
+                            if ($)
+                                $('#userf').hide('slow')
+                            $('#user').show('slow');
+                        });
+                    $('#btnr2u').on('click', function () {
+                            if ($)
+                                $('#userr').hide('slow')
+                            $('#user').show('slow');
+                        });
+                    $('#btnu2cc').on('click', function () {
+                            if ($)
+                             
+                            var str = $("#textInput").val();
+                            if(str=="1234")
+                            {
+                                $('#user').hide('slow')
+                                $('#mistress-only').show('slow');
+                            }
+                            else
+                                alert("WRONG PASSWORD");
+                        });
+                    $('#btncc2u').on('click', function () {
+                            if ($)
+                                $('#mistress-only').hide('slow')
+                            $('#user').show('slow');
+                        });
+
+                    
+                </script>
+            </div>
+        
+
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth0-theme.min.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
